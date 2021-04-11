@@ -36,6 +36,7 @@ export class InlineSVGDirective implements OnInit, OnChanges, OnDestroy {
   @Input() prepend: boolean = false;
   @Input() injectComponent: boolean = false;
   @Input() cacheSVG: boolean = true;
+  @Input() cacheBust: string;
   @Input() setSVGAttributes: { [key: string]: any };
   @Input() removeSVGAttributes: Array<string>;
   @Input() forceEvalStyles: boolean = false;
@@ -109,7 +110,7 @@ export class InlineSVGDirective implements OnInit, OnChanges, OnDestroy {
     }
     this._prevUrl = this.inlineSVG;
 
-    this._subscription = this._svgCache.getSVG(this.inlineSVG, this.resolveSVGUrl, this.cacheSVG)
+    this._subscription = this._svgCache.getSVG(this.inlineSVG, this.resolveSVGUrl, this.cacheSVG, this.cacheBust)
       .subscribe(
         (svg: SVGElement) => {
           if (SvgUtil.isUrlSymbol(this.inlineSVG)) {
